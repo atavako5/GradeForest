@@ -1,8 +1,42 @@
+<!-- 
 <div *ngIf="socialAuthServive.authState | async as socialUser">
     <p>Hello, {{socialUser.name}}!</p>
     <p>Your email: {{socialUser.email}}</p>
 
     <p *ngIf="status">Server Status: {{status.status}}</p>
+   
     
-    <button mat-raised-button (click)="logout()">Logout</button>
+
+    
+</div> -->
+
+<div>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>Grade Forest</span>
+      <span class="toolbar-spacer"></span>
+      <button mat-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
 </div>
+
+<mat-drawer-container>
+  <mat-drawer #drawer mode="side" position="end">
+    <app-search-select-list></app-search-select-list>
+
+    <div class="vertical-spacer"></div>
+    <button mat-button color="primary" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </button>
+  </mat-drawer>
+
+  <mat-drawer-content>
+    <div class="flex-container">
+      <app-tree></app-tree>
+      <app-item-viewer></app-item-viewer>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

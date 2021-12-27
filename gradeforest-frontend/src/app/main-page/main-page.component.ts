@@ -1,32 +1,52 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SocialAuthService } from 'angularx-social-login';
 import { Status } from 'interfaces/status';
 import { StatusService } from '../shared/status.service';
+import { AuthService, User } from '@auth0/auth0-angular';
+import { MyAuthService } from '../shared/my-auth.service';
+import { UserService } from '../shared/user.service';
+
+
+
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.css']
+  styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent implements OnInit {
+  breakpoint!: number;
+  listName: any;
 
+  constructor(
+    private router: Router,
+    private statusService: StatusService,
+    public auth: AuthService,
+    public myAuth: MyAuthService,
+    public userService: UserService
+  ) {}
 
-  constructor(private router: Router,
-    public socialAuthServive: SocialAuthService,
-    private statusService: StatusService) {
-  } 
-  
+  ngOnInit() {
+    this.getStatus();
+    this.breakpoint = window.innerWidth <= 700 ? 1 : 2;
+    this.myAuth.getProfileEmail((email)=>{
+      this.userService.addUser({_id:email}).subscribe()
+    })
+
+  }
+
+  onResize(event: any) {
+    this.breakpoint = event.target.innerWidth <= 700 ? 1 : 2;
+  }
   status!: Status;
 
-  ngOnInit(): void {
-    this.getStatus()
+  getStatus(): void {
+    this.statusService.getStatus().subscribe((status) => {
+      this.status = status;
+    });
   }
 
-  getStatus(): void{
-    this.statusService.getStatus().subscribe(status => { this.status = status})
-  }
 
   logout(): void {
-    this.socialAuthServive.signOut().then(() => this.router.navigate(['login']));
+    this.auth.logout({ returnTo: document.location.origin });
   }
 }

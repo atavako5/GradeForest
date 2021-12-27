@@ -1,0 +1,89 @@
+<div *ngIf="data" class="top-container">
+  <form
+  
+    [formGroup]="itemEditForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div   class="flex-container">
+      <div class="input-container">
+        <mat-form-field class="item-input">
+          <mat-label>Item Type</mat-label>
+          <mat-select formControlName="selectedItemTypeFormControl">
+            <mat-option *ngFor="let t of itemTypes" [value]="t">
+              <div>
+                {{ t }}
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="input-container">
+        <mat-form-field class="item-input">
+          <mat-label>Name</mat-label>
+          <input matInput maxlength="50" formControlName="nameFormControl" />
+        </mat-form-field>
+      </div>
+      <div class="input-container">
+        <mat-form-field class="item-input">
+          <mat-label>Weight</mat-label>
+          <input matInput maxlength="3" formControlName="weightFormControl" />
+          <mat-error
+            *ngIf="
+              itemEditForm.get('weightFormControl')?.hasError('pattern') &&
+              !itemEditForm.get('weightFormControl')?.hasError('required')
+            "
+          >
+            Please enter a valid number between 0 and 100
+          </mat-error>
+          <mat-error
+            *ngIf="itemEditForm.get('weightFormControl')?.hasError('required')"
+          >
+            weight is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        *ngIf=" itemEditForm.get('selectedItemTypeFormControl')?.value != 'Class' && itemEditForm.get('selectedItemTypeFormControl')?.value != 'Category'"
+        class="input-container"
+      >
+        <mat-form-field class="item-input">
+          <mat-label>Mark</mat-label>
+          <input matInput maxlength="3" formControlName="markFormControl" />
+          <mat-error
+            *ngIf="
+              itemEditForm.get('markFormControl')?.hasError('pattern') &&
+              !itemEditForm.get('markFormControl')?.hasError('required')
+            "
+          >
+            Please enter a valid number between 0 and 100
+          </mat-error>
+          <mat-error
+            *ngIf="itemEditForm.get('markFormControl')?.hasError('required')"
+          >
+            weight is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="buttons-container">
+      <button
+        mat-fab
+        color="warn"
+        (click)="onDelete()"
+        class="button-container"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+
+      <button
+        mat-fab
+        color="primary"
+        type="submit"
+        [disabled]="!itemEditForm.valid"
+        class="button-container"
+      >
+        <mat-icon>save</mat-icon>
+      </button>
+    </div>
+  </form>
+</div>

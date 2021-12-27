@@ -18,7 +18,7 @@ export class StatusService {
   getStatus(): Observable<Status> {
     return this.http.get<Status>(this.statusUrl)
     .pipe(
-      catchError(this.handleError<Status>('getHeroes'))
+      catchError(this.handleError<Status>('getStatus'))
     );
     
   }

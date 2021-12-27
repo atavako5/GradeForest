@@ -1,24 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
+import { AuthService } from '@auth0/auth0-angular';
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router,
-    private socialAuthService: SocialAuthService) {
+  constructor(private router: Router,public auth: AuthService) {
   }
   ngOnInit(): void {
   
   }
 
-  loginWithGoogle(): void {
-  this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID)
-  .then(() => this.router.navigate(['mainpage']));
-  }
 
+  login(){
+    this.auth.loginWithRedirect({appState: { target: '/mainpage' }})
+  }
 }

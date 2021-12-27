@@ -1,0 +1,34 @@
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-right: 10%;
+  margin-left: 5%;
+  margin-top: 10em;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.vertical-spacer {
+  height: 80%;
+}
+
+.horizontal-spacer {
+  width:100%
+}
+
+
+html { height:100%; }
+mat-drawer-container {
+height:100vh;
+}
+
+mat-drawer {
+    display: flex;
+  flex-direction: column;
+  width: 15em;
+
+}
+
