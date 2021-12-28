@@ -3,11 +3,11 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { List } from 'interfaces/list';
 import * as _ from 'lodash';
-import { AddListDialogComponent } from '../add-list-dialog/add-list-dialog.component';
-import { DeleteListDialogComponent } from '../delete-list-dialog/delete-list-dialog.component';
-import { CurrentListService } from '../shared/current-list.service';
-import { ListService } from '../shared/list.service';
-import { MyAuthService } from '../shared/my-auth.service';
+import { AddListDialogComponent } from '../../dialogs/add-list-dialog/add-list-dialog.component';
+import { DeleteListDialogComponent } from '../../dialogs/delete-list-dialog/delete-list-dialog.component';
+import { CurrentListService } from '../../helpers/services/current-list.service';
+import { ListService } from '../../api/services/list.service';
+import { MyAuthService } from '../../authentication/login/services/my-auth.service';
 
 export interface DialogData {
   listName: string;
@@ -30,7 +30,7 @@ export class SearchSelectListComponent implements OnInit {
   dataName: string = 'My Lists';
   listName: any;
 
-  selectedList =  new FormControl();
+  selectedList = new FormControl();
 
   getLists(setSelectedList: () => void) {
     this.myAuthService.getProfileEmail((email) => {
@@ -48,9 +48,9 @@ export class SearchSelectListComponent implements OnInit {
         this.selectedList.setValue(this.data[0]);
       }
     });
-    this.selectedList.valueChanges.subscribe(()=>{
+    this.selectedList.valueChanges.subscribe(() => {
       this.currentListService.setData(this.selectedList.value);
-    })
+    });
   }
 
   openNewListDialog(): void {
@@ -60,17 +60,16 @@ export class SearchSelectListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: string) => {
-      if(result === "Cancel"){
-        return
+      if (result === 'Cancel') {
+        return;
       }
-      result = result.trim()
+      result = result.trim();
       this.myAuthService.getProfileEmail((email) => {
         this.listService
           .addList({ user_id: email, name: result, items: [], lastIndex: 1 })
           .subscribe((list) => {
             this.getLists(() => {
-              this.selectedList.setValue( _.find(this.data,list));
-              
+              this.selectedList.setValue(_.find(this.data, list));
             });
           });
       });
@@ -83,17 +82,17 @@ export class SearchSelectListComponent implements OnInit {
       data: { listName: this.selectedList.value.name },
     });
     dialogRef.afterClosed().subscribe((result: string) => {
-      if(result === "Cancel"){
-        return
+      if (result === 'Cancel') {
+        return;
       }
-      result = result.trim()
+      result = result.trim();
       if (this.selectedList.value?._id) {
         this.listService.deleteList(this.selectedList.value._id).subscribe();
         this.getLists(() => {
           if (this.data) {
-            this.selectedList.setValue( this.data[0]);
+            this.selectedList.setValue(this.data[0]);
           } else {
-            this.selectedList.setValue( undefined);
+            this.selectedList.setValue(undefined);
           }
         });
       }

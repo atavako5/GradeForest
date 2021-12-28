@@ -5,17 +5,18 @@ import {
   ElementRef,
   ViewEncapsulation,
   AfterContentInit,
+  HostListener,
 } from '@angular/core';
-import { CurrentItemService } from '../shared/tree-item-viewer.service';
+import { CurrentItemService } from '../../helpers/services/tree-item-viewer.service';
 import { Item } from 'interfaces/item';
-import { CurrentListService } from '../shared/current-list.service';
+import { CurrentListService } from '../../helpers/services/current-list.service';
 import { ItemTypes } from 'interfaces/item-types';
 import { AngularTreeGridComponent } from 'angular-tree-grid';
 import { List } from 'interfaces/list';
-import { ListService } from '../shared/list.service';
+import { ListService } from '../../api/services/list.service';
 import { take } from 'rxjs/operators';
 import { IncludeTypes } from 'interfaces/include-types';
-import { WhatIfService } from '../shared/what-if.service';
+import { WhatIfService } from '../../helpers/services/what-if.service';
 
 @Component({
   selector: 'app-tree',
@@ -24,47 +25,11 @@ import { WhatIfService } from '../shared/what-if.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class TreeComponent implements OnInit {
-  ngOnInit(): void {
-    this.currentListService.currentData.subscribe((list) => {
-      if (this.currentList?._id != list?._id && this.angularGrid) {
-        this.angularGrid.deSelectAll();
-      }
-      if (this.currentList != list){
-        this.currentList = list;
-      }
-      if (this.angularGrid) {
-        this.angularGrid.ngOnChanges();
-      }
-      if(this.selectedData){
-        this.disableAdd = this.selectedData.type == ItemTypes.Item || this.selectedData.type == ItemTypes.Unknown
-      }
-   
-    });
-  
-    this.whatIfService.currentData.subscribe(value=>{
-      if (value == false){
-        if(this.currentList?._id){
-          this.listService.getList(this.currentList._id).subscribe((list:List)=>{
-            this.currentList = list
-            this.currentListService.setData(this.currentList)
-          })
-        }
-      }
-    })
-  }
-  constructor(
-    private currentListService: CurrentListService,
-    private listService: ListService,
-    private treeItemViewerService: CurrentItemService,
-    private whatIfService: WhatIfService
-  ) {}
-
-
   @ViewChild('angularGrid')
   angularGrid!: AngularTreeGridComponent;
   currentList!: List | undefined;
   selectedData!: Item;
-  public disableAdd: boolean = true
+  public disableAdd: boolean = true;
   configs: any = {
     id_field: 'id',
     parent_id_field: 'parent',
@@ -75,7 +40,7 @@ export class TreeComponent implements OnInit {
       expand_class: 'fa fa-caret-right',
       collapse_class: 'fa fa-caret-down',
       table_class: 'tree-table',
-      row_selection_class: 'selected-row'
+      row_selection_class: 'selected-row',
     },
     columns: [
       {
@@ -94,40 +59,81 @@ export class TreeComponent implements OnInit {
       {
         name: 'weight',
         header: 'Weight',
-        renderer: function(value: number) {
+        renderer: function (value: number) {
           return value + '%';
-        }
+        },
       },
       {
         name: 'mark',
         header: 'Mark',
-        renderer: function(value: number) {
+        renderer: function (value: number) {
           return value + '%';
-        }
+        },
       },
       {
         name: 'gpa',
         header: 'GPA',
-        
       },
       {
         name: 'remaingWeight',
         header: 'Weight Remaining',
-        renderer: function(value: number) {
+        renderer: function (value: number) {
           return value + '%';
-        }
+        },
       },
     ],
   };
+
+  ngOnInit(): void {
+    this.currentListService.currentData.subscribe((list) => {
+      if (this.currentList?._id != list?._id && this.angularGrid) {
+        this.angularGrid.deSelectAll();
+      }
+      if (this.currentList != list) {
+        this.currentList = list;
+      }
+      if (this.angularGrid) {
+        this.angularGrid.ngOnChanges();
+      }
+      if (this.selectedData) {
+        this.disableAdd =
+          this.selectedData.type == ItemTypes.Item ||
+          this.selectedData.type == ItemTypes.Unknown;
+      }
+    });
+
+    this.whatIfService.currentData.subscribe((value) => {
+      if (value == false) {
+        if (this.currentList?._id) {
+          this.listService
+            .getList(this.currentList._id)
+            .subscribe((list: List) => {
+              this.currentList = list;
+              this.currentListService.setData(this.currentList);
+            });
+        }
+      }
+    });
+  }
+
+  constructor(
+    private currentListService: CurrentListService,
+    private listService: ListService,
+    private treeItemViewerService: CurrentItemService,
+    private whatIfService: WhatIfService
+  ) {}
+
   onSelect(event: any) {
     this.selectedData = event.data;
     this.treeItemViewerService.setData(this.selectedData);
-    this.disableAdd = this.selectedData.type == ItemTypes.Item || this.selectedData.type == ItemTypes.Unknown
+    this.disableAdd =
+      this.selectedData.type == ItemTypes.Item ||
+      this.selectedData.type == ItemTypes.Unknown;
   }
   updateList() {
     if (this.currentList) {
       this.listService.updateList(this.currentList)?.subscribe();
-      this.currentListService.setData(this.currentList)
+      this.currentListService.setData(this.currentList);
       this.angularGrid.ngOnChanges();
     }
   }
@@ -144,7 +150,7 @@ export class TreeComponent implements OnInit {
           id: this.currentList.lastIndex,
           parent: this.selectedData.id,
           include: IncludeTypes.Include,
-          remaingWeight: 0
+          remaingWeight: 0,
         });
       } else {
         this.currentList.items.push({
@@ -156,7 +162,7 @@ export class TreeComponent implements OnInit {
           id: this.currentList.lastIndex,
           parent: 0,
           include: IncludeTypes.Include,
-          remaingWeight: 0
+          remaingWeight: 0,
         });
       }
       this.updateList();
@@ -174,7 +180,7 @@ export class TreeComponent implements OnInit {
         id: this.currentList.lastIndex,
         parent: 0,
         include: IncludeTypes.Include,
-        remaingWeight: 0
+        remaingWeight: 0,
       });
       this.updateList();
     }

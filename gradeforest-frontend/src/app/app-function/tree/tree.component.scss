@@ -1,16 +1,16 @@
-@import "../../styles.scss";
+@import "../../../styles.scss";
 .table-wrapper {
   overflow-x: auto;
 }
 
 .fab {
-  position:absolute;
+  position: absolute;
   right: 5vw;
   bottom: 5vw;
 }
 
 .tree-table {
-    overflow-x: auto;
+  overflow-x: auto;
 }
 
 .fab-button {
@@ -18,5 +18,5 @@
 }
 
 .selected-row {
-    @extend .background-color-accent 
+  @extend .background-color-accent;
 }

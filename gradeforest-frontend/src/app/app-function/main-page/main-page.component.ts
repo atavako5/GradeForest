@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Status } from 'interfaces/status';
-import { StatusService } from '../shared/status.service';
+import { StatusService } from '../../api/services/status.service';
 import { AuthService, User } from '@auth0/auth0-angular';
-import { MyAuthService } from '../shared/my-auth.service';
-import { UserService } from '../shared/user.service';
-
-
+import { MyAuthService } from '../../authentication/login/services/my-auth.service';
+import { UserService } from '../../api/services/user.service';
 
 @Component({
   selector: 'app-main-page',
@@ -28,10 +26,9 @@ export class MainPageComponent implements OnInit {
   ngOnInit() {
     this.getStatus();
     this.breakpoint = window.innerWidth <= 700 ? 1 : 2;
-    this.myAuth.getProfileEmail((email)=>{
-      this.userService.addUser({_id:email}).subscribe()
-    })
-
+    this.myAuth.getProfileEmail((email) => {
+      this.userService.addUser({ _id: email }).subscribe();
+    });
   }
 
   onResize(event: any) {
@@ -44,7 +41,6 @@ export class MainPageComponent implements OnInit {
       this.status = status;
     });
   }
-
 
   logout(): void {
     this.auth.logout({ returnTo: document.location.origin });

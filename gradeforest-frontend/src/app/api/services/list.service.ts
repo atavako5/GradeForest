@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { List } from 'interfaces/list';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { WhatIfService } from './what-if.service';
+import { WhatIfService } from '../../helpers/services/what-if.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,12 +12,11 @@ export class ListService {
   listUrl: string = '/api/list';
   whatIfMode: boolean = false;
   constructor(private http: HttpClient, private whatIfService: WhatIfService) {
-    whatIfService.currentData.subscribe(whatIfMode=>{
-      if(whatIfMode !== undefined){
-        this.whatIfMode = whatIfMode
+    whatIfService.currentData.subscribe((whatIfMode) => {
+      if (whatIfMode !== undefined) {
+        this.whatIfMode = whatIfMode;
       }
-    })
-
+    });
   }
 
   getLists(userId: string): Observable<List[]> {
@@ -45,16 +44,17 @@ export class ListService {
       .pipe(catchError(this.handleError('deleteList')));
   }
 
-  updateList(list: List, safetyOverride: boolean = false): Observable<List> | undefined {
-    if(this.whatIfMode === false || safetyOverride === true){
-    
+  updateList(
+    list: List,
+    safetyOverride: boolean = false
+  ): Observable<List> | undefined {
+    if (this.whatIfMode === false || safetyOverride === true) {
       return this.http
-      .put<List>(this.listUrl, list)
-      .pipe(catchError(this.handleError('updateList', list)));
-    }else{
-      return undefined
+        .put<List>(this.listUrl, list)
+        .pipe(catchError(this.handleError('updateList', list)));
+    } else {
+      return undefined;
     }
-
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

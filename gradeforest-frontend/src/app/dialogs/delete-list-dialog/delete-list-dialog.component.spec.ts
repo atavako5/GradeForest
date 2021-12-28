@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeleteListDialogComponent } from './delete-list-dialog.component';
+import { DeleteListDialogComponent } from '../../app-function/search-select-list/search-select-list.component';
 
 describe('DeleteListDialogComponent', () => {
   let component: DeleteListDialogComponent;
@@ -8,9 +8,8 @@ describe('DeleteListDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DeleteListDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [DeleteListDialogComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

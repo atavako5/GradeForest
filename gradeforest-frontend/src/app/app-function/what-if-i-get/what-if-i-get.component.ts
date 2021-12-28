@@ -3,12 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Item } from 'interfaces/item';
 import { ItemTypes } from 'interfaces/item-types';
 import { List } from 'interfaces/list';
-import { CurrentListService } from '../shared/current-list.service';
-import { ForestService } from '../shared/forest.service';
-import { CurrentItemService } from '../shared/tree-item-viewer.service';
-import { WhatIfService } from '../shared/what-if.service';
+import { CurrentListService } from '../../helpers/services/current-list.service';
+import { ForestService } from '../../helpers/services/forest.service';
+import { CurrentItemService } from '../../helpers/services/tree-item-viewer.service';
+import { WhatIfService } from '../../helpers/services/what-if.service';
 import { WhatIfTypes } from 'interfaces/what-if-types';
-import { ListService } from '../shared/list.service';
+import { ListService } from '../../api/services/list.service';
 
 @Component({
   selector: 'app-what-if-i-get',
