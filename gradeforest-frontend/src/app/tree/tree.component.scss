@@ -1,15 +1,22 @@
-
-
-db-angular-tree-grid table {
-    flex: 1 1 auto;
-    width: 35vw;
+@import "../../styles.scss";
+.table-wrapper {
+  overflow-x: auto;
 }
+
 .fab {
-    position: absolute;
-    right: 5vw;
-    bottom: 5vw;
-  }
+  position:absolute;
+  right: 5vw;
+  bottom: 5vw;
+}
+
+.tree-table {
+    overflow-x: auto;
+}
 
 .fab-button {
-    margin-left: 1em;
+  margin-left: 1em;
+}
+
+.selected-row {
+    @extend .background-color-accent 
 }

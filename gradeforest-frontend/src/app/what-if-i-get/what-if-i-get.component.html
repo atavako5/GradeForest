@@ -1,0 +1,60 @@
+<mat-divider></mat-divider>
+<div *ngIf="selectedItem && selectedItem.type == enabledType" class="top-container">
+  <form [formGroup]="itemEditForm" (ngSubmit)="onSubmit()">
+    <div class="flex-container">
+      <div class="input-container">
+        <mat-form-field class="item-input">
+          <mat-label>{{markFormLabel}}</mat-label>
+          <input matInput maxlength="7" formControlName="markFormControl" />
+          <mat-error
+            *ngIf="
+              itemEditForm.get('markFormControl')?.hasError('pattern') &&
+              !itemEditForm.get('markFormControl')?.hasError('required')
+            "
+          >
+            Please enter a valid number between 0 and 100
+          </mat-error>
+          <mat-error
+            *ngIf="itemEditForm.get('markFormControl')?.hasError('required')"
+          >
+            weight is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+    </div>
+    <div class="buttons-container">
+      <mat-radio-group formControlName="whatIfType" aria-label="What If Type">
+        <mat-radio-button [value]="IGet">I get</mat-radio-button>
+        <mat-radio-button [value]="IWant">I want</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="buttons-container">
+      <mat-slide-toggle formControlName="whatIfMode">What if mode</mat-slide-toggle>
+      <button
+        mat-button 
+        color="primary"
+        type="submit"
+        [disabled]="!itemEditForm.valid ||  itemEditForm.get('whatIfMode')?.value == false"
+        class="button-container"
+      >
+        <mat-icon>drive_file_rename_outline</mat-icon>
+      </button>
+    </div>
+
+    <div class="buttons-container">
+      <button
+        mat-button 
+        color="warn"
+        type="button"
+        [disabled]="!itemEditForm.valid ||  itemEditForm.get('whatIfMode')?.value == false"
+        class="button-container"
+        (click)="onPermaSave()"
+      >
+        <mat-icon>save_outline</mat-icon>
+      </button>
+    </div>
+
+  </form>
+</div>
+<mat-divider></mat-divider>

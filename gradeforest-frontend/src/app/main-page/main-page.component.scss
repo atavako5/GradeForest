@@ -1,10 +1,10 @@
 .flex-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: left;
   flex-wrap: wrap;
-  margin-right: 10%;
   margin-left: 5%;
   margin-top: 10em;
+  width: 100%;
 }
 
 .toolbar-spacer {

@@ -5,7 +5,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class TreeItemViewerService {
+export class CurrentItemService {
 
   constructor() { }
   private data = new BehaviorSubject<Item|undefined>(undefined)

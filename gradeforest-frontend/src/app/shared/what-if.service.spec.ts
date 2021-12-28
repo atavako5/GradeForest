@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CurrentItemService } from './tree-item-viewer.service';
+import { WhatIfService } from './what-if.service';
 
-describe('TreeItemViewerService', () => {
-  let service: CurrentItemService;
+describe('WhatIfService', () => {
+  let service: WhatIfService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CurrentItemService);
+    service = TestBed.inject(WhatIfService);
   });
 
   it('should be created', () => {

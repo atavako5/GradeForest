@@ -19,7 +19,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatFormFieldModule } from '@angular/material/form-field';
 import { ItemViewerComponent } from './item-viewer/item-viewer.component';
-import { TreeItemViewerService } from './shared/tree-item-viewer.service';
+import { CurrentItemService } from './shared/tree-item-viewer.service';
 import {MatInputModule} from '@angular/material/input'
 import {MatDialogModule} from '@angular/material/dialog';
 import { AddListDialogComponent } from './add-list-dialog/add-list-dialog.component';
@@ -34,6 +34,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatDividerModule} from '@angular/material/divider';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { DeleteListDialogComponent } from './delete-list-dialog/delete-list-dialog.component';
+import { WhatIfIGetComponent } from './what-if-i-get/what-if-i-get.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,7 @@ import { DeleteListDialogComponent } from './delete-list-dialog/delete-list-dial
     AddListDialogComponent,
     SearchSelectListComponent,
     DeleteListDialogComponent,
+    WhatIfIGetComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,11 +82,13 @@ import { DeleteListDialogComponent } from './delete-list-dialog/delete-list-dial
     FormsModule,
     MatDividerModule,
     NgxMatSelectSearchModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSlideToggleModule,
+    MatRadioModule
 
   ],
   providers: [
-    TreeItemViewerService,
+    CurrentItemService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,

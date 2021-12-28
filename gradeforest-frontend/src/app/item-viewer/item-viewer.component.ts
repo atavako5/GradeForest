@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IncludeTypes } from 'interfaces/include-types';
 import { Item } from 'interfaces/item';
 import { ItemTypes } from 'interfaces/item-types';
 import { List } from 'interfaces/list';
@@ -7,7 +8,7 @@ import * as _ from 'lodash';
 import { CurrentListService } from '../shared/current-list.service';
 import { ForestService } from '../shared/forest.service';
 import { ListService } from '../shared/list.service';
-import { TreeItemViewerService } from '../shared/tree-item-viewer.service';
+import { CurrentItemService } from '../shared/tree-item-viewer.service';
 
 @Component({
   selector: 'app-item-viewer',
@@ -17,19 +18,21 @@ import { TreeItemViewerService } from '../shared/tree-item-viewer.service';
 export class ItemViewerComponent implements OnInit {
   breakpoint!: number;
 
-  constructor(private TreeItemViewerService: TreeItemViewerService, private currentListService: CurrentListService, private listService: ListService, private forestService: ForestService) {}
+  constructor(private TreeItemViewerService: CurrentItemService, private currentListService: CurrentListService, private listService: ListService, private forestService: ForestService) {}
 
   data: Item|undefined;
   itemTypes: string[] = [];
+  includeTypes: string[] = [];
   currentList!: List| undefined;
   // Helper
   StringIsNumber = (value: any) => isNaN(Number(value)) === false;
 
   itemEditForm = new FormGroup({
     selectedItemTypeFormControl: new FormControl(''),
+    selectedIncludeTypeFormControl: new FormControl(''),
     nameFormControl:  new FormControl(''),
-    weightFormControl: new FormControl(0, [Validators.required, Validators.nullValidator, Validators.pattern("^[0-9][0-9]?$|^100$")]),
-    markFormControl: new FormControl(0, [Validators.required, Validators.nullValidator, Validators.pattern("^[0-9][0-9]?$|^100$")]),
+    weightFormControl: new FormControl(0, [Validators.required, Validators.nullValidator, Validators.pattern("^(0*([0-9]{1,2}(\\.[0-9]+)?)|\\.[0-9]+|100(\\.0+$)?)$")]),
+    markFormControl: new FormControl(0, [Validators.required, Validators.nullValidator, Validators.pattern("^(0*([0-9]{1,3}(\\.[0-9]+)?)|\\.[0-9]+|1000(\\.0+$)?)$")]),
   })
 
 
@@ -40,6 +43,7 @@ export class ItemViewerComponent implements OnInit {
   }
   updateItemEditForm(){
     if (this.data){
+    this.itemEditForm.get("selectedIncludeTypeFormControl")?.setValue(this.data.include)
     this.itemEditForm.get("selectedItemTypeFormControl")?.setValue(this.data.type)
     this.itemEditForm.get("nameFormControl")?.setValue(this.data.name)
     this.itemEditForm.get("weightFormControl")?.setValue(this.data.weight)
@@ -63,6 +67,7 @@ export class ItemViewerComponent implements OnInit {
     
 
     this.itemTypes = this.ToArray(ItemTypes)
+    this.includeTypes = this.ToArray(IncludeTypes)
     const index = this.itemTypes.indexOf(ItemTypes.Unknown);
     if (index > -1) {
       this.itemTypes.splice(index, 1);
@@ -79,7 +84,7 @@ export class ItemViewerComponent implements OnInit {
   updateList(){
     this.currentListService.setData(this.currentList)
     if (this.currentList)
-    this.listService.updateList(this.currentList).subscribe()
+    this.listService.updateList(this.currentList)?.subscribe()
   }
   onSubmit() {
     if(this.data){
@@ -87,17 +92,19 @@ export class ItemViewerComponent implements OnInit {
       this.data.mark = this.itemEditForm.value["markFormControl"]
       this.data.weight = this.itemEditForm.value["weightFormControl"]
       this.data.type = this.itemEditForm.value["selectedItemTypeFormControl"]
-  
-      if (this.currentList)
-      this.currentList.items = _.map(this.currentList.items, (a: Item) => {
-        return a.id == this.data?.id ? this.data : a;
-      });
-  
-      this.updateList()
-    }
+      this.data.include = this.itemEditForm.value["selectedIncludeTypeFormControl"]
+      if(this.data.type == ItemTypes.Class){
+        this.data.parent = 0
+      }
+      if (this.currentList){
+        this.currentList.items = _.map(this.currentList.items, (a: Item) => {
+          return a.id == this.data?.id ? this.data : a;
+        });
+        this.currentList = this.forestService.updateTree(this.currentList)
+        this.updateList()
+      }
 
-    
-    
+    }
   }
 
   

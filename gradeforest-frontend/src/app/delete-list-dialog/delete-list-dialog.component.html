@@ -3,7 +3,7 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onCancelClick()" cdkFocusInitial>Cancel</button>
-  <button mat-button [mat-dialog-close]="data.listName" >
+  <button mat-button  (click)="onOKClick()" >
     Ok
   </button>
 </div>

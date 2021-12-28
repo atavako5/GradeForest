@@ -18,7 +18,11 @@ export class DeleteListDialogComponent implements OnInit {
   ) {}
 
   onCancelClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close("Cancel");
+  }
+
+  onOKClick(): void{
+    this.dialogRef.close(" "+this.data.listName)
   }
 
 }

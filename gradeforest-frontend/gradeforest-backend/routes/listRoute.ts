@@ -7,8 +7,18 @@ var router = express.Router();
 
 const ListModel = model<List>('List', ListSchema);
 
-router.get('/:userId', function (req, res) {
+router.get('/lists/:userId', function (req, res) {
   ListModel.find({ user_id: req.params.userId }, async (err, docs) => {
+    if (!err && docs) {
+      res.status(200).json(docs);
+    } else {
+      res.status(200).json(undefined);
+    }
+  });
+});
+
+router.get('/list/:listId', function (req, res) {
+  ListModel.findById(req.params.listId, async (err, docs) => {
     if (!err && docs) {
       res.status(200).json(docs);
     } else {

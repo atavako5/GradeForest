@@ -59,7 +59,11 @@ export class SearchSelectListComponent implements OnInit {
       data: { listName: this.listName },
     });
 
-    dialogRef.afterClosed().subscribe((result: any) => {
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if(result === "Cancel"){
+        return
+      }
+      result = result.trim()
       this.myAuthService.getProfileEmail((email) => {
         this.listService
           .addList({ user_id: email, name: result, items: [], lastIndex: 1 })
@@ -78,7 +82,11 @@ export class SearchSelectListComponent implements OnInit {
       width: '250px',
       data: { listName: this.selectedList.value.name },
     });
-    dialogRef.afterClosed().subscribe((result: any) => {
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if(result === "Cancel"){
+        return
+      }
+      result = result.trim()
       if (this.selectedList.value?._id) {
         this.listService.deleteList(this.selectedList.value._id).subscribe();
         this.getLists(() => {

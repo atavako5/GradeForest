@@ -1,10 +1,18 @@
 <div *ngIf="data" class="top-container">
-  <form
-  
-    [formGroup]="itemEditForm"
-    (ngSubmit)="onSubmit()"
-  >
-    <div   class="flex-container">
+  <form [formGroup]="itemEditForm" (ngSubmit)="onSubmit()">
+    <div class="flex-container">
+      <div class="input-container">
+        <mat-form-field class="item-input">
+          <mat-label>Include Item?</mat-label>
+          <mat-select formControlName="selectedIncludeTypeFormControl">
+            <mat-option *ngFor="let t of includeTypes" [value]="t">
+              <div>
+                {{ t }}
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
       <div class="input-container">
         <mat-form-field class="item-input">
           <mat-label>Item Type</mat-label>
@@ -17,6 +25,8 @@
           </mat-select>
         </mat-form-field>
       </div>
+    </div>
+    <div class="flex-container">
       <div class="input-container">
         <mat-form-field class="item-input">
           <mat-label>Name</mat-label>
@@ -26,7 +36,7 @@
       <div class="input-container">
         <mat-form-field class="item-input">
           <mat-label>Weight</mat-label>
-          <input matInput maxlength="3" formControlName="weightFormControl" />
+          <input matInput maxlength="6" formControlName="weightFormControl" />
           <mat-error
             *ngIf="
               itemEditForm.get('weightFormControl')?.hasError('pattern') &&
@@ -42,13 +52,20 @@
           </mat-error>
         </mat-form-field>
       </div>
+
+    </div>
+
+    <div class="flex-container">
       <div
-        *ngIf=" itemEditForm.get('selectedItemTypeFormControl')?.value != 'Class' && itemEditForm.get('selectedItemTypeFormControl')?.value != 'Category'"
+        *ngIf="
+          itemEditForm.get('selectedItemTypeFormControl')?.value != 'Class' &&
+          itemEditForm.get('selectedItemTypeFormControl')?.value != 'Category'
+        "
         class="input-container"
       >
         <mat-form-field class="item-input">
           <mat-label>Mark</mat-label>
-          <input matInput maxlength="3" formControlName="markFormControl" />
+          <input matInput maxlength="7" formControlName="markFormControl" />
           <mat-error
             *ngIf="
               itemEditForm.get('markFormControl')?.hasError('pattern') &&
@@ -64,6 +81,7 @@
           </mat-error>
         </mat-form-field>
       </div>
+
     </div>
     <div class="buttons-container">
       <button
