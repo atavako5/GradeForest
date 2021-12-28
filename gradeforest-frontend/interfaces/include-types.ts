@@ -1,4 +1,4 @@
 export enum IncludeTypes {
-    Include = "Include",
-    Exclude = "Exclude"
-  }
+  Include = 'Include',
+  Exclude = 'Exclude',
+}

@@ -5,9 +5,14 @@
 $primary: mat-palette($mat-deep-purple, 600, 500, 900);
 $accent: mat-palette($mat-amber, A400, A300, A600);
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .color-primary {
   color: mat-color($primary);

@@ -11,7 +11,7 @@ import { connectDB } from './config/db';
 import { jwtCheck } from './authz/check-jwt';
 
 // routes
-import {apiRouter} from './routes/apiRoute';
+import { apiRouter } from './routes/apiRoute';
 
 // connect to mongo DB
 connectDB();
@@ -25,7 +25,7 @@ var app = express();
 app.use(helmet());
 
 if (process.env.NODE_ENV === 'development') {
-    console.log("Using Morgan Logger")
+  console.log('Using Morgan Logger');
   app.use(morgan('dev'));
 }
 

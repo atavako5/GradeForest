@@ -26,7 +26,6 @@ import { WhatIfService } from '../shared/what-if.service';
 export class TreeComponent implements OnInit {
   ngOnInit(): void {
     this.currentListService.currentData.subscribe((list) => {
-      console.log(list)
       if (this.currentList?._id != list?._id && this.angularGrid) {
         this.angularGrid.deSelectAll();
       }
@@ -121,7 +120,6 @@ export class TreeComponent implements OnInit {
     ],
   };
   onSelect(event: any) {
-    console.log(event.event)
     this.selectedData = event.data;
     this.treeItemViewerService.setData(this.selectedData);
     this.disableAdd = this.selectedData.type == ItemTypes.Item || this.selectedData.type == ItemTypes.Unknown

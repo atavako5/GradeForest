@@ -1,3 +1,3 @@
 export interface Status {
-    status: String
-  }  
+  status: String;
+}

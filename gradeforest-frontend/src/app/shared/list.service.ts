@@ -13,7 +13,7 @@ export class ListService {
   whatIfMode: boolean = false;
   constructor(private http: HttpClient, private whatIfService: WhatIfService) {
     whatIfService.currentData.subscribe(whatIfMode=>{
-      if(whatIfMode){
+      if(whatIfMode !== undefined){
         this.whatIfMode = whatIfMode
       }
     })
@@ -46,7 +46,6 @@ export class ListService {
   }
 
   updateList(list: List, safetyOverride: boolean = false): Observable<List> | undefined {
-    console.log("WHAT MODE:",this.whatIfMode)
     if(this.whatIfMode === false || safetyOverride === true){
     
       return this.http

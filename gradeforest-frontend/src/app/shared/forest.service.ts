@@ -49,7 +49,7 @@ export class ForestService {
     return this.updateTree(list)
   }
 
-  public IWantToGet(list:List,item:Item,grade:number): List{
+  public iWantToGet(list:List,item:Item,grade:number): List{
     list.lastIndex++
     if (item.remaingWeight <= 0){
       return list;
@@ -57,11 +57,6 @@ export class ForestService {
 
    
     var remainingGrade = ((grade-(((100-item.remaingWeight)/100)*item.mark))*100)/(item.remaingWeight)
-    console.log("J:",grade)
-    console.log("W:",item.weight)
-    console.log("G:",item.mark)
-    console.log("R:",item.remaingWeight)
-    console.log("REMAINING GRADE:",remainingGrade)
 
 
     var remainingGradeItem: Item = {
@@ -199,7 +194,6 @@ export class ForestService {
       // non leaf node
       treeItem.childNodes.forEach((i) => {
         this.processMarks(i);
-        console.log('Im in the parent node');
       });
       this.processItem(treeItem);
     } else {
