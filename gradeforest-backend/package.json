@@ -1,0 +1,27 @@
+{
+  "name": "gradeforest-backend",
+  "version": "1.0.0",
+  "description": "server for grade forest",
+  "main": "server.js",
+  "scripts": {
+    "start": "npx tsc --outDir ./dist ./server.ts && copyfiles .env ./dist/ && node ./dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ali Tavakoli",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "express-jwt": "^6.1.0",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "jwks-rsa": "^2.0.5",
+    "mongoose": "^6.1.4",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "rimraf": "^3.0.2"
+  }
+}
