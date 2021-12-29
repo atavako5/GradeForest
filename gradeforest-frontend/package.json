@@ -28,7 +28,6 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@types/lodash": "^4.14.178",
-    "angular-tree-grid": "^3.0.6",
     "body-parser": "^1.19.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",

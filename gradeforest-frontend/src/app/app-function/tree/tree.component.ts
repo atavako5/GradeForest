@@ -42,7 +42,7 @@ export class TreeComponent implements OnInit {
       expand_class: 'fa fa-caret-right',
       collapse_class: 'fa fa-caret-down',
       table_class: 'tree-table',
-      row_selection_class: 'selected-row',
+      row_selection_class: 'background-color-accent',
     },
     columns: [
       {

@@ -3,7 +3,7 @@ export interface Column {
   name: string;
   css_class: string;
   sorted: number;
-  sort_type: number | null;
+  sort_type: number ;
   sortable: boolean;
   editable: Boolean;
   filter: Boolean;

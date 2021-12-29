@@ -1,4 +1,3 @@
-@import "../../../styles.scss";
 .table-wrapper {
   overflow-x: auto;
 }
@@ -15,8 +14,4 @@
 
 .fab-button {
   margin-left: 1em;
-}
-
-.selected-row {
-  @extend .background-color-accent;
 }

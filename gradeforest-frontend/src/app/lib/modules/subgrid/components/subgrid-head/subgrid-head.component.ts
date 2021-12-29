@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Column } from 'angular-tree-grid/lib/models/Column.model';
-import { DefaultColumn } from 'src/app/lib/default-classes/default-column';
+import { Column } from '../../../../models/Column.model';
 import { DefaultConfigs } from 'src/app/lib/default-classes/default-config';
-import { Configs } from '../../../../models/Configs.model';
 
 @Component({
   selector: '[db-subgrid-head]',

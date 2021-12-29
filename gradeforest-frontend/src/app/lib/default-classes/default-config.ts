@@ -1,4 +1,4 @@
-import { Configs } from 'angular-tree-grid/lib/models/Configs.model';
+import { Configs } from '../models/Configs.model';
 import { Actions } from '../models/Actions.model';
 import { Column } from '../models/Column.model';
 import { Subgrid } from '../models/Subgrid.model';

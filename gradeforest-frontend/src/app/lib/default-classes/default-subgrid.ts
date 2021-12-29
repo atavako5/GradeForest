@@ -1,6 +1,5 @@
-import { Column } from 'angular-tree-grid/lib/models/Column.model';
-import { Subgrid } from 'angular-tree-grid/lib/models/Subgrid.model';
-import { DefaultColumn } from './default-column';
+import { Column } from '../models/Column.model';
+import { Subgrid } from '../models/Subgrid.model';
 
 export class DefaultSubgrid implements Subgrid {
   id_field: string = 'id';

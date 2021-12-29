@@ -1,4 +1,4 @@
-import { Actions } from 'angular-tree-grid/lib/models/Actions.model';
+import { Actions } from '../models/Actions.model';
 
 export class DefaultActions implements Actions {
   edit: boolean = false;

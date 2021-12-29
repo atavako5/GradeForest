@@ -1,4 +1,4 @@
-import { CssClass } from 'angular-tree-grid/lib/models/CssClass.model';
+import { CssClass } from '../models/CssClass.model';
 
 export class DefaultCssClass implements CssClass {
   expand_class = 'plus';

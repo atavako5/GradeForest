@@ -1,4 +1,4 @@
-import { Column } from 'angular-tree-grid/lib/models/Column.model';
+import { Column } from '../models/Column.model';
 
 export class DefaultColumn implements Column {
   header: string = '';
