@@ -12,7 +12,7 @@ export class ListService {
   listUrl: string = '/api/list';
   whatIfMode: boolean = false;
   constructor(private http: HttpClient, private whatIfService: WhatIfService) {
-    whatIfService.currentData.subscribe((whatIfMode) => {
+    whatIfService.currentWhatIfMode.subscribe((whatIfMode) => {
       if (whatIfMode !== undefined) {
         this.whatIfMode = whatIfMode;
       }

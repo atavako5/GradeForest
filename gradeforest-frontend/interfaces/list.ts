@@ -1,3 +1,4 @@
+import { CumulativeGrade } from './cumulativeGrade';
 import { Item } from './item';
 
 export interface List {
@@ -6,4 +7,5 @@ export interface List {
   name: string;
   items: Item[];
   lastIndex: number;
+  cumulatedGrade: CumulativeGrade;
 }

@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
+import { CumulativeGrade } from 'interfaces/cumulativeGrade';
 import { IncludeTypes } from 'interfaces/include-types';
 import { Item } from 'interfaces/item';
 import { ItemTypes } from 'interfaces/item-types';
 import { List } from 'interfaces/list';
 import * as _ from 'lodash';
+import { DefaultGPARules } from '../default-gpa-rules';
 
 interface TreeItem {
   item: Item;
   index: number;
   parentIndex: number;
+  unknownChildrenCounter: number;
   childNodes: TreeItem[];
 }
 
@@ -32,8 +35,33 @@ export class ForestService {
     return myNewList;
   }
 
-  public whatIfIGet(list:List, item: Item, grade: number): List{
-    list.lastIndex++
+  public cumulateGrades(list: List): CumulativeGrade {
+    var cumulativeGrade: CumulativeGrade = {
+      cumulativeGPA: 0,
+      cumulativeGrade: 0,
+      GPAScale: 0,
+    };
+
+    if (list) {
+      var cumulativeMark = 0;
+      var cumulativeWeight = 0;
+      list.items.forEach((item) => {
+        if (item.parent === 0) {
+          cumulativeMark += item.mark * item.weight;
+          cumulativeWeight += item.weight;
+        }
+      });
+      console.log(cumulativeMark + cumulativeWeight);
+      cumulativeMark = cumulativeMark / cumulativeWeight;
+      cumulativeGrade.cumulativeGrade = cumulativeMark;
+      cumulativeGrade.GPAScale = 4; /// TODO
+      cumulativeGrade.cumulativeGPA = this.gradePointToGPA(cumulativeMark);
+    }
+    return cumulativeGrade;
+  }
+
+  public whatIfIGet(list: List, item: Item, grade: number): List {
+    list.lastIndex++;
     var remainingGradeItem: Item = {
       id: list.lastIndex,
       type: ItemTypes.Item,
@@ -43,35 +71,35 @@ export class ForestService {
       weight: item.remaingWeight,
       gpa: 0,
       parent: item.id,
-      remaingWeight: 0
-    }
-    list.items.push(remainingGradeItem)
-    return this.updateTree(list)
+      remaingWeight: 0,
+    };
+    list.items.push(remainingGradeItem);
+    return this.updateTree(list);
   }
 
-  public iWantToGet(list:List,item:Item,grade:number): List{
-    list.lastIndex++
-    if (item.remaingWeight <= 0){
+  public iWantToGet(list: List, item: Item, grade: number): List {
+    list.lastIndex++;
+    if (item.remaingWeight <= 0) {
       return list;
     }
 
-   
-    var remainingGrade = ((grade-(((100-item.remaingWeight)/100)*item.mark))*100)/(item.remaingWeight)
-
+    var remainingGrade =
+      ((grade - ((100 - item.remaingWeight) / 100) * item.mark) * 100) /
+      item.remaingWeight;
 
     var remainingGradeItem: Item = {
       id: list.lastIndex,
       type: ItemTypes.Item,
       include: IncludeTypes.Include,
       name: `You got this for ${item.name}`,
-      mark: _.ceil(remainingGrade,1),
+      mark: _.ceil(remainingGrade, 1),
       weight: item.remaingWeight,
       gpa: 0,
       parent: item.id,
-      remaingWeight: 0
-    }
-    list.items.unshift(remainingGradeItem)
-    return this.updateTree(list)
+      remaingWeight: 0,
+    };
+    list.items.unshift(remainingGradeItem);
+    return this.updateTree(list);
   }
 
   public updateTree(list: List): List {
@@ -138,6 +166,7 @@ export class ForestService {
       this.add(hashTable, aItem.id, {
         item: aItem,
         childNodes: [],
+        unknownChildrenCounter: 0,
         index: index,
         parentIndex: 0,
       })
@@ -149,6 +178,13 @@ export class ForestService {
         if (t) {
           t.parentIndex = hashTable.get(aItem.parent)?.index || 0;
           hashTable.get(aItem.parent)?.childNodes.push(t);
+          if (t.item.type === ItemTypes.Unknown) {
+            var itemParent = hashTable.get(aItem.parent);
+            if (itemParent) {
+              itemParent.unknownChildrenCounter++;
+              hashTable.set(itemParent.item.id, itemParent);
+            }
+          }
         }
       } else {
         var t = hashTable.get(aItem.id);
@@ -163,14 +199,33 @@ export class ForestService {
   private processItem(treeItem: TreeItem) {
     var updatedGrade = 0;
     var updatedWeight = 0;
-    var updatedGPA = 0
+    var updatedGPA = 0;
     if (treeItem.childNodes) {
-
-
       treeItem.childNodes.forEach((i) => {
-        if (i.item.type != ItemTypes.Unknown && i.item.include == IncludeTypes.Include) {
-          var currentItemGPA = this.gradePointToGPA(i.item.mark)
-          i.item.gpa = currentItemGPA
+        var unknownChildrenLogic = !(
+          i.item.type != ItemTypes.Item &&
+          i.childNodes.length - i.unknownChildrenCounter === 0
+        );
+
+        if (unknownChildrenLogic) {
+          console.log(
+            'name: ',
+
+            i.item.type,
+            'Unknown Children Counter',
+            i.unknownChildrenCounter,
+            'child nodes length',
+            i.childNodes.length
+          );
+        }
+
+        if (
+          i.item.type != ItemTypes.Unknown &&
+          unknownChildrenLogic &&
+          i.item.include == IncludeTypes.Include
+        ) {
+          var currentItemGPA = this.gradePointToGPA(i.item.mark);
+          i.item.gpa = currentItemGPA;
           this.myGradeTree.set(i.item.id, i);
           updatedGPA += currentItemGPA * (i.item.weight / 100);
           updatedGrade += i.item.mark * (i.item.weight / 100);
@@ -183,7 +238,7 @@ export class ForestService {
       }
 
       treeItem.item.mark = updatedGrade;
-      treeItem.item.gpa = updatedGPA
+      treeItem.item.gpa = updatedGPA;
       treeItem.item.remaingWeight = 100 * (1 - updatedWeight);
       this.myGradeTree.set(treeItem.item.id, treeItem);
     }
@@ -206,34 +261,16 @@ export class ForestService {
 
   private gradePointToGPA(grade: number): number {
     grade = _.round(grade);
-    var GPA: number =
-      grade >= 90
-        ? 4
-        : grade >= 85
-        ? 3.9
-        : grade >= 80
-        ? 3.7
-        : grade >= 77
-        ? 3.3
-        : grade >= 73
-        ? 3
-        : grade >= 70
-        ? 2.7
-        : grade >= 67
-        ? 2.3
-        : grade >= 63
-        ? 2
-        : grade >= 60
-        ? 1.7
-        : grade >= 57
-        ? 1.3
-        : grade >= 53
-        ? 1
-        : grade >= 50
-        ? 0.7
-        : grade >= 40
-        ? 0
-        : 0;
-    return GPA;
+
+    var defaultRules = new DefaultGPARules().DefaultRules;
+    var correspondingGPA = 0;
+    for (var i = 0; i < defaultRules.length; i++) {
+      if (grade >= defaultRules[i].gradeGreaterThan) {
+        correspondingGPA = defaultRules[i].correspondingGPA;
+        break;
+      }
+    }
+
+    return correspondingGPA;
   }
 }

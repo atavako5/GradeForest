@@ -60,7 +60,7 @@ export class WhatIfIGetComponent implements OnInit {
     });
 
     this.itemEditForm.get('whatIfMode')?.valueChanges.subscribe((value) => {
-      this.whatifService.setData(value);
+      this.whatifService.setWhatIfMode(value);
 
       if (value === true) {
         if (!this.tempList) {
@@ -110,6 +110,7 @@ export class WhatIfIGetComponent implements OnInit {
         );
       }
     }
+    this.whatifService.sendNotification();
   }
 
   onPermaSave() {

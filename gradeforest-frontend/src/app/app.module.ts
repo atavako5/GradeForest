@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { TreeComponent } from './app-function/tree/tree.component';
 import { CommonModule } from '@angular/common';
-import { AngularTreeGridModule } from 'angular-tree-grid';
+import { AngularTreeGridModule } from './lib/angular-tree-grid.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -37,6 +37,7 @@ import { DeleteListDialogComponent } from './dialogs/delete-list-dialog/delete-l
 import { WhatIfIGetComponent } from './app-function/what-if-i-get/what-if-i-get.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
+import { CumulativeGradesComponent } from './app-function/cumulative-grades/cumulative-grades.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { MatRadioModule } from '@angular/material/radio';
     SearchSelectListComponent,
     DeleteListDialogComponent,
     WhatIfIGetComponent,
+    CumulativeGradesComponent,
   ],
   imports: [
     BrowserModule,

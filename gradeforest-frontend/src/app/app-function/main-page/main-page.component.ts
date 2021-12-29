@@ -5,6 +5,7 @@ import { StatusService } from '../../api/services/status.service';
 import { AuthService, User } from '@auth0/auth0-angular';
 import { MyAuthService } from '../../authentication/login/services/my-auth.service';
 import { UserService } from '../../api/services/user.service';
+import { DefaultGPARules } from 'src/app/helpers/default-gpa-rules';
 
 @Component({
   selector: 'app-main-page',
@@ -27,7 +28,9 @@ export class MainPageComponent implements OnInit {
     this.getStatus();
     this.breakpoint = window.innerWidth <= 700 ? 1 : 2;
     this.myAuth.getProfileEmail((email) => {
-      this.userService.addUser({ _id: email }).subscribe();
+      this.userService
+        .addUser({ _id: email, GPARules: new DefaultGPARules().DefaultRules })
+        .subscribe();
     });
   }
 

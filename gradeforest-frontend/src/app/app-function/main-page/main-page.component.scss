@@ -7,6 +7,14 @@
   width: 100%;
 }
 
+.flex-container-gpa {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 3em;
+}
+
 .toolbar-spacer {
   flex: 1 1 auto;
 }
@@ -16,19 +24,18 @@
 }
 
 .horizontal-spacer {
-  width:100%
+  width: 100%;
 }
 
-
-html { height:100%; }
+html {
+  height: 100%;
+}
 mat-drawer-container {
-height:100vh;
+  height: 100vh;
 }
 
 mat-drawer {
-    display: flex;
+  display: flex;
   flex-direction: column;
   width: 15em;
-
 }
-

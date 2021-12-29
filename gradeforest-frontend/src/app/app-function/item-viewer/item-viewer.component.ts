@@ -19,7 +19,7 @@ export class ItemViewerComponent implements OnInit {
   breakpoint!: number;
 
   constructor(
-    private TreeItemViewerService: CurrentItemService,
+    private currentItemService: CurrentItemService,
     private currentListService: CurrentListService,
     private listService: ListService,
     private forestService: ForestService
@@ -54,8 +54,6 @@ export class ItemViewerComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent): void {
-    console.log('Key Event', event.key);
-
     if (event.key == 'ArrowUp') {
       event.stopPropagation();
     } else if (event.key === 'ArrowDown') {
@@ -84,7 +82,7 @@ export class ItemViewerComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.TreeItemViewerService.currentData.subscribe((data) => {
+    this.currentItemService.currentData.subscribe((data) => {
       this.data = data;
       this.updateItemEditForm();
     });
@@ -111,9 +109,11 @@ export class ItemViewerComponent implements OnInit {
   }
 
   updateList() {
-    this.currentListService.setData(this.currentList);
-    if (this.currentList)
+    if (this.currentList) {
+      this.currentList = this.forestService.updateTree(this.currentList);
+      this.currentListService.setData(this.currentList);
       this.listService.updateList(this.currentList)?.subscribe();
+    }
   }
   onSubmit() {
     if (this.data) {
@@ -130,18 +130,20 @@ export class ItemViewerComponent implements OnInit {
         this.currentList.items = _.map(this.currentList.items, (a: Item) => {
           return a.id == this.data?.id ? this.data : a;
         });
-        this.currentList = this.forestService.updateTree(this.currentList);
         this.updateList();
       }
     }
   }
 
   onDelete() {
-    if (this.currentList && this.data)
+    if (this.currentList && this.data) {
       this.currentList = this.forestService.pruneTree(
         this.currentList,
         this.data
       );
-    this.updateList();
+      this.currentItemService.setData(undefined);
+
+      this.updateList();
+    }
   }
 }

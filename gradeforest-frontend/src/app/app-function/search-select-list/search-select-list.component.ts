@@ -66,7 +66,17 @@ export class SearchSelectListComponent implements OnInit {
       result = result.trim();
       this.myAuthService.getProfileEmail((email) => {
         this.listService
-          .addList({ user_id: email, name: result, items: [], lastIndex: 1 })
+          .addList({
+            user_id: email,
+            name: result,
+            items: [],
+            lastIndex: 1,
+            cumulatedGrade: {
+              cumulativeGrade: 0,
+              cumulativeGPA: 0,
+              GPAScale: 0,
+            },
+          })
           .subscribe((list) => {
             this.getLists(() => {
               this.selectedList.setValue(_.find(this.data, list));
