@@ -105,3 +105,4 @@ dist
 
 auth_config.json
 Dockerfile
+deploy.sh
