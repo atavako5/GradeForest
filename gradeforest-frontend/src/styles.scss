@@ -29,3 +29,8 @@ body {
 .background-color-accent {
   background-color: mat-color($accent);
 }
+
+mat-divider {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}

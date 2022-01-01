@@ -1,0 +1,21 @@
+<div *ngIf="selectedList">
+  <button
+    class="list-button"
+    mat-button
+    color="primary"
+    (click)="openGPARulesDialog()"
+  >
+    <mat-icon>edit</mat-icon>
+    Edit GPA Rules
+  </button>
+  <button
+    class="list-button"
+    mat-button
+    color="primary"
+    (click)="openGPARulesCopyDialog()"
+  >
+    <mat-icon>content_copy</mat-icon>
+    Copy GPA rules from list
+  </button>
+</div>
+<mat-divider></mat-divider>

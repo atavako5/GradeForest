@@ -44,7 +44,7 @@ export class WhatIfIGetComponent implements OnInit {
     private whatifService: WhatIfService,
     private forestService: ForestService,
     private listSerivce: ListService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.itemEditForm.get('whatIfType')?.setValue(WhatIfTypes.IGet);
@@ -68,8 +68,17 @@ export class WhatIfIGetComponent implements OnInit {
         }
         this.currentListService.setData(this.tempList);
       } else {
+
         this.tempList = undefined;
-        this.currentListService.setData(this.permList);
+        if (this.permList._id) {
+          this.listSerivce.getList(this.permList._id).subscribe(list => {
+            console.log("what if mode is off", list)
+            this.permList = list
+            this.currentListService.setData(this.permList);
+          })
+
+        }
+
       }
     });
 
@@ -115,6 +124,7 @@ export class WhatIfIGetComponent implements OnInit {
 
   onPermaSave() {
     if (this.tempList) {
+      console.log("perma save")
       this.listSerivce.updateList(this.tempList, true)?.subscribe();
       this.permList = this.tempList;
       this.tempList = undefined;

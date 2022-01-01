@@ -1,0 +1,10 @@
+<div class="gpa-rules-container">
+  <db-angular-fix-header-grid
+    [source]="gpaRules"
+    [configs]="configs"
+  ></db-angular-fix-header-grid>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button (click)="onOKClick()" cdkFocusInitial>Ok</button>
+  </div>
+</div>

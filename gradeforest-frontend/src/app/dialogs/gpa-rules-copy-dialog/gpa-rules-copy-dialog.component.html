@@ -1,0 +1,19 @@
+<div class="gpa-rules-container">
+  <mat-label>Please select a list to copy GPA rules from</mat-label>
+  <br />
+  <mat-form-field appearance="fill" class="gpa-copy-from-list">
+    <mat-label>Select List</mat-label>
+    <mat-select [formControl]="selectedList">
+      <mat-option *ngFor="let d of data" [value]="d">
+        <div>
+          {{ d.name }}
+        </div>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button (click)="onOKClick()" cdkFocusInitial>Ok</button>
+  </div>
+</div>

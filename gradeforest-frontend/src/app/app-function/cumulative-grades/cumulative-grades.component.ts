@@ -8,8 +8,8 @@ import { CumulativeGradeService } from 'src/app/helpers/services/cumulative-grad
   styleUrls: ['./cumulative-grades.component.scss'],
 })
 export class CumulativeGradesComponent implements OnInit {
-  data: CumulativeGrade = { cumulativeGPA: 0, cumulativeGrade: 0, GPAScale: 0 };
-  constructor(private cumulativeGradeService: CumulativeGradeService) {}
+  data: CumulativeGrade = { cumulativeGPA: 0, cumulativeGrade: 0, GPAScale: 0, cumulativeLetter: "" };
+  constructor(private cumulativeGradeService: CumulativeGradeService) { }
 
   ngOnInit(): void {
     this.cumulativeGradeService.currentData.subscribe((data) => {

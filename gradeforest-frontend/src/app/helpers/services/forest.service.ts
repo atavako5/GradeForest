@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { CumulativeGrade } from 'interfaces/cumulativeGrade';
+import { GPARule } from 'interfaces/gpa-rule';
 import { IncludeTypes } from 'interfaces/include-types';
 import { Item } from 'interfaces/item';
 import { ItemTypes } from 'interfaces/item-types';
 import { List } from 'interfaces/list';
 import * as _ from 'lodash';
 import { DefaultGPARules } from '../default-gpa-rules';
+import { CurrentListService } from './current-list.service';
+
 
 interface TreeItem {
   item: Item;
@@ -18,11 +21,26 @@ interface TreeItem {
 @Injectable({
   providedIn: 'root',
 })
+
+
 export class ForestService {
-  constructor() {}
+  constructor(private currentListService: CurrentListService) {
+    this.currentListService.currentData.subscribe(list => {
+      if (list) {
+        this.gpaRules = list.GPARules
+        this.gpaRules.sort(this.compareGPARules)
+        if (this.gpaRules.length > 0) {
+          this.maxGPA = this.gpaRules[0].correspondingGPA
+        }
+
+      }
+    })
+  }
 
   private myGradeTree: Map<number, TreeItem> = new Map();
   private myGradeList!: List;
+  private maxGPA: number = 4
+  private gpaRules: GPARule[] = new DefaultGPARules().DefaultRules;
 
   private removeArrayFromArray(array: Item[], arrayToBeRemoved: Item[]) {
     return _.difference(array, arrayToBeRemoved);
@@ -40,6 +58,7 @@ export class ForestService {
       cumulativeGPA: 0,
       cumulativeGrade: 0,
       GPAScale: 0,
+      cumulativeLetter: "-"
     };
 
     if (list) {
@@ -48,14 +67,14 @@ export class ForestService {
       list.items.forEach((item) => {
         if (item.parent === 0) {
           cumulativeMark += item.mark * item.weight;
-          cumulativeWeight += item.weight;
+          cumulativeWeight = cumulativeWeight + Number(item.weight);
         }
       });
-      console.log(cumulativeMark + cumulativeWeight);
-      cumulativeMark = cumulativeMark / cumulativeWeight;
-      cumulativeGrade.cumulativeGrade = cumulativeMark;
-      cumulativeGrade.GPAScale = 4; /// TODO
-      cumulativeGrade.cumulativeGPA = this.gradePointToGPA(cumulativeMark);
+      var finalMark = cumulativeMark / cumulativeWeight;
+      cumulativeGrade.cumulativeGrade = _.round(finalMark, 2);
+      cumulativeGrade.GPAScale = this.maxGPA
+      cumulativeGrade.cumulativeLetter = this.gradePointToLetter(finalMark)
+      cumulativeGrade.cumulativeGPA = this.gradePointToGPA(finalMark);
     }
     return cumulativeGrade;
   }
@@ -112,6 +131,17 @@ export class ForestService {
     });
     return this.myGradeList;
   }
+
+  compareGPARules(a: GPARule, b: GPARule) {
+    if (a.gradeGreaterThan < b.gradeGreaterThan) {
+      return 1;
+    }
+    if (a.gradeGreaterThan > b.gradeGreaterThan) {
+      return -1;
+    }
+    return 0;
+  }
+
 
   private getImmediateItems(
     list: List,
@@ -259,14 +289,33 @@ export class ForestService {
     }
   }
 
+  private gradePointToLetter(grade: number): string {
+    grade = _.round(grade);
+
+
+    var correspondingLetter = "-";
+    for (var i = 0; i < this.gpaRules.length; i++) {
+      if (grade >= this.gpaRules[i].gradeGreaterThan) {
+        let letter = this.gpaRules[i].correspondingLetter
+        if (letter) {
+          correspondingLetter = letter;
+        }
+
+        break;
+      }
+    }
+
+    return correspondingLetter;
+  }
+
   private gradePointToGPA(grade: number): number {
     grade = _.round(grade);
 
-    var defaultRules = new DefaultGPARules().DefaultRules;
+
     var correspondingGPA = 0;
-    for (var i = 0; i < defaultRules.length; i++) {
-      if (grade >= defaultRules[i].gradeGreaterThan) {
-        correspondingGPA = defaultRules[i].correspondingGPA;
+    for (var i = 0; i < this.gpaRules.length; i++) {
+      if (grade >= this.gpaRules[i].gradeGreaterThan) {
+        correspondingGPA = this.gpaRules[i].correspondingGPA;
         break;
       }
     }

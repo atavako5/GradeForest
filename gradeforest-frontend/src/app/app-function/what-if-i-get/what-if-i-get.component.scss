@@ -1,22 +1,18 @@
-mat-divider{
-    margin-top: 2em;
-    margin-bottom: 2em;
-}
-
-.top-container{
-    margin-left: 1em;
-    margin-right: 1em;
+.top-container {
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 .buttons-container {
-    display: flex;
-    flex: 1 1 auto;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 1.5em;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 1.5em;
+  overflow: hidden;
 }
 
-mat-radio-button{
-    margin-left: 1em;
-    margin-right: 1em;
+mat-radio-button {
+  margin-top: 2em;
+  margin-left: 1em;
+  margin-right: 1em;
 }

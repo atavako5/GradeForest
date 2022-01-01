@@ -141,7 +141,7 @@ export class TreeComponent implements OnInit {
     private whatIfService: WhatIfService,
     private cumulativeGradeService: CumulativeGradeService,
     private forestService: ForestService
-  ) {}
+  ) { }
 
   onSelect(event: any) {
     this.selectedData = event.data;
@@ -151,7 +151,7 @@ export class TreeComponent implements OnInit {
       this.selectedData.type == ItemTypes.Unknown;
   }
   rowSelect() {
-    if (this.currentList && this.angularGrid) {
+    if (this.currentList && this.angularGrid && this.selectedData) {
       this.angularGrid.expandRow(this.selectedData.id);
       this.angularGrid.selectOne(this.currentList.lastIndex);
       this.currentItemService.setData(

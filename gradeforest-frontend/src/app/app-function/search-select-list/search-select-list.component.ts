@@ -8,6 +8,7 @@ import { DeleteListDialogComponent } from '../../dialogs/delete-list-dialog/dele
 import { CurrentListService } from '../../helpers/services/current-list.service';
 import { ListService } from '../../api/services/list.service';
 import { MyAuthService } from '../../authentication/login/services/my-auth.service';
+import { CurrentListsService } from 'src/app/helpers/services/current-lists.service';
 
 export interface DialogData {
   listName: string;
@@ -23,12 +24,14 @@ export class SearchSelectListComponent implements OnInit {
     public dialog: MatDialog,
     public myAuthService: MyAuthService,
     public listService: ListService,
-    public currentListService: CurrentListService
-  ) {}
+    public currentListService: CurrentListService,
+    public currentListsService: CurrentListsService
+  ) { }
 
   data: List[] | undefined = [];
   dataName: string = 'My Lists';
   listName: any;
+  initilized: boolean = false;
 
   selectedList = new FormControl();
 
@@ -36,6 +39,11 @@ export class SearchSelectListComponent implements OnInit {
     this.myAuthService.getProfileEmail((email) => {
       this.listService.getLists(email).subscribe((lists) => {
         this.data = lists;
+        if (this.data) {
+          this.currentListsService.setData(this.data)
+        } else {
+          this.currentListsService.setData(undefined)
+        }
         setSelectedList();
         this.currentListService.setData(this.selectedList.value);
       });
@@ -44,7 +52,8 @@ export class SearchSelectListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLists(() => {
-      if (this.data) {
+      if (this.data && !this.initilized) {
+        this.initilized = true;
         this.selectedList.setValue(this.data[0]);
       }
     });
@@ -71,13 +80,16 @@ export class SearchSelectListComponent implements OnInit {
             name: result,
             items: [],
             lastIndex: 1,
+            GPARules: [],
             cumulatedGrade: {
               cumulativeGrade: 0,
               cumulativeGPA: 0,
               GPAScale: 0,
+              cumulativeLetter: "-"
             },
           })
           .subscribe((list) => {
+
             this.getLists(() => {
               this.selectedList.setValue(_.find(this.data, list));
             });

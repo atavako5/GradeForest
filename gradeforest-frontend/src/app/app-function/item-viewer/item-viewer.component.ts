@@ -23,7 +23,7 @@ export class ItemViewerComponent implements OnInit {
     private currentListService: CurrentListService,
     private listService: ListService,
     private forestService: ForestService
-  ) {}
+  ) { }
 
   data: Item | undefined;
   itemTypes: string[] = [];

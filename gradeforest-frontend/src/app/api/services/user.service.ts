@@ -14,30 +14,29 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   // Get the status
-  getUser(id:string): Observable<User> {
+  getUser(id: string): Observable<User> {
     return this.http.get<User>(`${this.userUrl}/${id}`)
-    .pipe(
-      catchError(this.handleError<User>('getUser'))
-    );
-    
+      .pipe(
+        catchError(this.handleError<User>('getUser'))
+      );
+
   }
 
-  addUser(user:User): Observable<User> {
-    return this.http.post<User>(`${this.userUrl}`,user)
-    .pipe(
-      catchError(this.handleError<User>('addUser', user))
-    );
+  addUser(user: User): Observable<User> {
+    return this.http.post<User>(`${this.userUrl}`, user)
+      .pipe(
+        catchError(this.handleError<User>('addUser', user))
+      );
   }
 
   deleteUser(id: number): Observable<unknown> {
-    const url = `${this.userUrl}/${id}`; // DELETE api/heroes/42
+    const url = `${this.userUrl}/${id}`;
     return this.http.delete(url)
       .pipe(
         catchError(this.handleError('deleteUser'))
       );
   }
 
-  /** PUT: update the hero on the server. Returns the updated hero upon success. */
   updateUser(user: User): Observable<User> {
     return this.http.put<User>(this.userUrl, user)
       .pipe(
@@ -47,13 +46,13 @@ export class UserService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-  
+
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
-  
+
       // TODO: better job of transforming error for user consumption
       console.log(`${operation} failed: ${error.message}`);
-  
+
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };

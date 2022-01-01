@@ -1,3 +1,35 @@
-.toolbar-spacer{
-    flex: 1 1 auto;
-  }
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.titles {
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+  background-color: transparent;
+  transform: translate(-50%, -50%);
+}
+
+.title {
+  font-size: 4vw;
+  height: 50%;
+  font-size-adjust: 10pt;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.title,
+.sub-title {
+  text-align: center;
+  align-self: center;
+  font-weight: bold;
+}
+
+#landing-wrapper {
+  display: table;
+  width: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+    url("../../../assets/background.jpg");
+  background-position: center top;
+  height: 100%;
+}

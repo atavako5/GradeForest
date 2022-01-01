@@ -4,7 +4,7 @@
   flex-wrap: wrap;
   margin-left: 5%;
   margin-top: 10em;
-  width: 100%;
+  width: 90%;
 }
 
 .flex-container-gpa {
@@ -21,18 +21,40 @@
 
 .vertical-spacer {
   display: flex;
-  justify-content: space-around;
+  justify-items: center;
+
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 html {
   height: 100%;
 }
 mat-drawer-container {
-  height: 100vh;
+  height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 mat-drawer {
   display: flex;
   flex-direction: column;
   width: 15em;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.file-button {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 3em;
+}
+
+.last-item {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }

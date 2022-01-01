@@ -1,4 +1,5 @@
 import { CumulativeGrade } from './cumulativeGrade';
+import { GPARule } from './gpa-rule';
 import { Item } from './item';
 
 export interface List {
@@ -8,4 +9,5 @@ export interface List {
   items: Item[];
   lastIndex: number;
   cumulatedGrade: CumulativeGrade;
+  GPARules: GPARule[];
 }

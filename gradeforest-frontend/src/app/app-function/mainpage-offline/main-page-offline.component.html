@@ -15,10 +15,6 @@
     <mat-toolbar-row>
       <span>Grade Forest</span>
       <span class="toolbar-spacer"></span>
-      <button mat-button color="accent" (click)="logout()">
-        <mat-icon>logout</mat-icon>
-        Logout
-      </button>
       <button mat-button (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
@@ -31,7 +27,39 @@
     <app-search-select-list></app-search-select-list>
     <app-what-if-i-get></app-what-if-i-get>
     <app-gpa-rules></app-gpa-rules>
-    <div class="vertical-spacer"></div>
+    <div (click)="uploadFile.click()">
+      <button class="file-button" mat-raised-button color="primary">
+        Upload your Data!
+      </button>
+      <input
+        #uploadFile
+        (change)="upload($event)"
+        type="file"
+        style="display: none"
+      />
+    </div>
+
+    <div class="vertical-spacer">
+      <div>
+        <button
+          class="file-button"
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="downloadFile($event)"
+        >
+          Download your Data!
+        </button>
+      </div>
+      <button
+        routerLink="/"
+        class="file-button last-item"
+        mat-raised-button
+        color="primary"
+      >
+        Main Page
+      </button>
+    </div>
   </mat-drawer>
 
   <mat-drawer-content>

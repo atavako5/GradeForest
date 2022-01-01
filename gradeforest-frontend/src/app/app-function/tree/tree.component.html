@@ -1,20 +1,26 @@
 <div *ngIf="currentList">
-
-    <div class="tree-wrapper">
-      <db-angular-tree-grid  #angularGrid (rowselect)="onSelect($event)" [data]="currentList.items" [configs]="configs"  ></db-angular-tree-grid>
-    </div>
-
-
-  <div class="fab">
-      <button  class="fab-button" mat-fab color="primary" (click)="onAddClass()" >
-          <mat-icon>playlist_add</mat-icon>
-        </button>
-  
-      <button [disabled]="disableAdd"class="fab-button" mat-fab color="primary" (click)="onAdd()" >
-          <mat-icon>add</mat-icon>
-        </button>
-  
+  <div class="tree-wrapper">
+    <db-angular-tree-grid
+      #angularGrid
+      (rowselect)="onSelect($event)"
+      [data]="currentList.items"
+      [configs]="configs"
+    ></db-angular-tree-grid>
   </div>
 
+  <div class="fab">
+    <button class="fab-button" mat-fab color="primary" (click)="onAddClass()">
+      <mat-icon>playlist_add</mat-icon>
+    </button>
 
+    <button
+      [disabled]="disableAdd"
+      class="fab-button"
+      mat-fab
+      color="primary"
+      (click)="onAdd()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
 </div>

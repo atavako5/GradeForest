@@ -10,14 +10,16 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router,public auth: AuthService) {
+  constructor(private router: Router, public auth: AuthService) {
   }
   ngOnInit(): void {
-  
+
   }
 
-
-  login(){
-    this.auth.loginWithRedirect({appState: { target: '/mainpage' }})
+  offlineUse() {
+    this.router.navigate(["/main-page-offline"])
+  }
+  login() {
+    this.auth.loginWithRedirect({ appState: { target: '/mainpage' } })
   }
 }
