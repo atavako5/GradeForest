@@ -9,6 +9,7 @@ import { CurrentListService } from '../../helpers/services/current-list.service'
 import { ListService } from '../../api/services/list.service';
 import { MyAuthService } from '../../authentication/login/services/my-auth.service';
 import { CurrentListsService } from 'src/app/helpers/services/current-lists.service';
+import { DefaultGPARules } from 'src/app/helpers/default-gpa-rules';
 
 export interface DialogData {
   listName: string;
@@ -80,7 +81,7 @@ export class SearchSelectListComponent implements OnInit {
             name: result,
             items: [],
             lastIndex: 1,
-            GPARules: [],
+            GPARules: new DefaultGPARules().DefaultRules,
             cumulatedGrade: {
               cumulativeGrade: 0,
               cumulativeGPA: 0,
