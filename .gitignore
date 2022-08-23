@@ -106,3 +106,6 @@ dist
 auth_config.json
 Dockerfile
 deploy.sh
+gradeforest-frontend/run.sh
+gradeforest-frontend/package-lock.json
+gradeforest-frontend/package-lock.json
