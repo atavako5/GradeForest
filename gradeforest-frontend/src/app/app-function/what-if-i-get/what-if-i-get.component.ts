@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Item } from 'interfaces/item';
 import { ItemTypes } from 'interfaces/item-types';
 import { List } from 'interfaces/list';
@@ -26,10 +26,10 @@ export class WhatIfIGetComponent implements OnInit {
   IWant = WhatIfTypes.IWant;
   markFormLabel: string = this.whatIfIGet;
 
-  itemEditForm = new FormGroup({
-    whatIfMode: new FormControl(false),
-    whatIfType: new FormControl(''),
-    markFormControl: new FormControl(0, [
+  itemEditForm = new UntypedFormGroup({
+    whatIfMode: new UntypedFormControl(false),
+    whatIfType: new UntypedFormControl(''),
+    markFormControl: new UntypedFormControl(0, [
       Validators.required,
       Validators.nullValidator,
       Validators.pattern(

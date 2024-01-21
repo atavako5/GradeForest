@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { List } from 'interfaces/list';
 
@@ -19,7 +19,7 @@ export class GpaRulesCopyDialogComponent implements OnInit {
   listId: string = ""
   listName: any;
 
-  selectedList = new FormControl();
+  selectedList = new UntypedFormControl();
 
   constructor(public dialogRef: MatDialogRef<GpaRulesCopyDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public copyDialogData: GpaRulesCopyDialogData) { }

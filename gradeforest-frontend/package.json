@@ -10,16 +10,16 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~13.1.1",
+    "@angular/animations": "^17.1.0",
     "@angular/cdk": "^13.1.1",
-    "@angular/common": "~13.1.1",
-    "@angular/compiler": "~13.1.1",
-    "@angular/core": "~13.1.1",
-    "@angular/forms": "~13.1.1",
+    "@angular/common": "^17.1.0",
+    "@angular/compiler": "^17.1.0",
+    "@angular/core": "^17.1.0",
+    "@angular/forms": "^17.1.0",
     "@angular/material": "^13.1.1",
-    "@angular/platform-browser": "~13.1.1",
-    "@angular/platform-browser-dynamic": "~13.1.1",
-    "@angular/router": "~13.1.1",
+    "@angular/platform-browser": "^17.1.0",
+    "@angular/platform-browser-dynamic": "^17.1.0",
+    "@angular/router": "^17.1.0",
     "@auth0/auth0-angular": "^1.8.1",
     "@fortawesome/angular-fontawesome": "^0.10.1",
     "@fortawesome/fontawesome-svg-core": "~1.2.36",
@@ -27,7 +27,6 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@types/lodash": "^4.14.178",
-    "angular-fix-header-grid": "^1.1.1",
     "dotenv": "^10.0.0",
     "express-jwt": "^6.1.0",
     "font-awesome": "^4.7.0",
@@ -36,12 +35,12 @@
     "ngx-mat-select-search": "^3.3.3",
     "rxjs": "~6.6.0",
     "ts-node": "^10.4.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.14.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^13.1.2",
-    "@angular/cli": "~13.1.2",
-    "@angular/compiler-cli": "~13.1.1",
+    "@angular-devkit/build-angular": "^17.1.0",
+    "@angular/cli": "^17.1.0",
+    "@angular/compiler-cli": "^17.1.0",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.20.37",
     "jasmine-core": "~3.8.0",
@@ -51,6 +50,6 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "tslib": "^2.3.1",
-    "typescript": "~4.5.4"
+    "typescript": "~5.3.3"
   }
 }

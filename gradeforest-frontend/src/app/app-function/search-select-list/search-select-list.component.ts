@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { List } from 'interfaces/list';
 import * as _ from 'lodash';
@@ -34,7 +34,7 @@ export class SearchSelectListComponent implements OnInit {
   listName: any;
   initilized: boolean = false;
 
-  selectedList = new FormControl();
+  selectedList = new UntypedFormControl();
 
   getLists(setSelectedList: () => void) {
     this.myAuthService.getProfileEmail((email) => {

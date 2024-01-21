@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IncludeTypes } from 'interfaces/include-types';
 import { Item } from 'interfaces/item';
 import { ItemTypes } from 'interfaces/item-types';
@@ -32,18 +32,18 @@ export class ItemViewerComponent implements OnInit {
   // Helper
   StringIsNumber = (value: any) => isNaN(Number(value)) === false;
 
-  itemEditForm = new FormGroup({
-    selectedItemTypeFormControl: new FormControl(''),
-    selectedIncludeTypeFormControl: new FormControl(''),
-    nameFormControl: new FormControl(''),
-    weightFormControl: new FormControl(0, [
+  itemEditForm = new UntypedFormGroup({
+    selectedItemTypeFormControl: new UntypedFormControl(''),
+    selectedIncludeTypeFormControl: new UntypedFormControl(''),
+    nameFormControl: new UntypedFormControl(''),
+    weightFormControl: new UntypedFormControl(0, [
       Validators.required,
       Validators.nullValidator,
       Validators.pattern(
         '^(0*([0-9]{1,2}(\\.[0-9]+)?)|\\.[0-9]+|100(\\.0+$)?)$'
       ),
     ]),
-    markFormControl: new FormControl(0, [
+    markFormControl: new UntypedFormControl(0, [
       Validators.required,
       Validators.nullValidator,
       Validators.pattern(

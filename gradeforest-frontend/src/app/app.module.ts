@@ -39,7 +39,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
 import { CumulativeGradesComponent } from './app-function/cumulative-grades/cumulative-grades.component';
 import { MainPageOfflineComponent } from './app-function/mainpage-offline/mainpage-offline.component';
-import { AngularFixHeaderGridModule } from 'angular-fix-header-grid';
 import { GpaRulesDialogComponent } from './dialogs/gpa-rules-dialog/gpa-rules-dialog.component';
 import { GpaRulesComponent } from './app-function/gpa-rules/gpa-rules.component';
 import { GpaRulesCopyDialogComponent } from './dialogs/gpa-rules-copy-dialog/gpa-rules-copy-dialog.component';
@@ -103,8 +102,7 @@ import { GpaRulesCopyDialogComponent } from './dialogs/gpa-rules-copy-dialog/gpa
     NgxMatSelectSearchModule,
     ReactiveFormsModule,
     MatSlideToggleModule,
-    MatRadioModule,
-    AngularFixHeaderGridModule
+    MatRadioModule
   ],
   providers: [
     CurrentItemService,
