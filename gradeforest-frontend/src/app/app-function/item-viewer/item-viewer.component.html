@@ -4,9 +4,9 @@
       <div class="input-container">
         <mat-form-field class="item-input">
           <mat-label>Include Item?</mat-label>
-          <mat-select formControlName="selectedIncludeTypeFormControl">
-            <mat-option *ngFor="let t of includeTypes" [value]="t">
-              <div>
+          <mat-select  formControlName="selectedIncludeTypeFormControl">
+            <mat-option  *ngFor="let t of includeTypes" [value]="t">
+              <div class="list-item" >
                 {{ t }}
               </div>
             </mat-option>
@@ -18,7 +18,7 @@
           <mat-label>Item Type</mat-label>
           <mat-select formControlName="selectedItemTypeFormControl">
             <mat-option *ngFor="let t of itemTypes" [value]="t">
-              <div>
+              <div class="list-item" >
                 {{ t }}
               </div>
             </mat-option>

@@ -5,7 +5,6 @@ import { IncludeTypes } from 'interfaces/include-types';
 import { Item } from 'interfaces/item';
 import { ItemTypes } from 'interfaces/item-types';
 import { List } from 'interfaces/list';
-import * as _ from 'lodash';
 import { DefaultGPARules } from '../default-gpa-rules';
 import { CurrentListService } from './current-list.service';
 
@@ -43,7 +42,7 @@ export class ForestService {
   private gpaRules: GPARule[] = new DefaultGPARules().DefaultRules;
 
   private removeArrayFromArray(array: Item[], arrayToBeRemoved: Item[]) {
-    return _.difference(array, arrayToBeRemoved);
+    return array.filter(x => !arrayToBeRemoved.includes(x))
   }
 
   public pruneTree(list: List, item: Item): List {
@@ -71,7 +70,7 @@ export class ForestService {
         }
       });
       var finalMark = cumulativeMark / cumulativeWeight;
-      cumulativeGrade.cumulativeGrade = _.round(finalMark, 2);
+      cumulativeGrade.cumulativeGrade = Math.round(finalMark*100)/100;
       cumulativeGrade.GPAScale = this.maxGPA
       cumulativeGrade.cumulativeLetter = this.gradePointToLetter(finalMark)
       cumulativeGrade.cumulativeGPA = this.gradePointToGPA(finalMark);
@@ -111,7 +110,7 @@ export class ForestService {
       type: ItemTypes.Item,
       include: IncludeTypes.Include,
       name: `You got this for ${item.name}`,
-      mark: _.ceil(remainingGrade, 1),
+      mark: Math.ceil(remainingGrade*10)/10,
       weight: item.remaingWeight,
       gpa: 0,
       parent: item.id,
@@ -263,8 +262,8 @@ export class ForestService {
         }
       });
       if (updatedWeight != 0) {
-        updatedGrade = _.round(updatedGrade / updatedWeight, 2);
-        updatedGPA = _.round(updatedGPA / updatedWeight, 2);
+        updatedGrade = Math.round(updatedGrade / updatedWeight * 100) / 100;
+        updatedGPA = Math.round(updatedGPA / updatedWeight * 100) / 100;
       }
 
       treeItem.item.mark = updatedGrade;
@@ -290,7 +289,7 @@ export class ForestService {
   }
 
   private gradePointToLetter(grade: number): string {
-    grade = _.round(grade);
+    grade = Math.round(grade);
 
 
     var correspondingLetter = "-";
@@ -309,7 +308,7 @@ export class ForestService {
   }
 
   private gradePointToGPA(grade: number): number {
-    grade = _.round(grade);
+    grade = Math.round(grade);
 
 
     var correspondingGPA = 0;

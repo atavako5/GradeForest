@@ -50,6 +50,6 @@ export class MainPageComponent implements OnInit {
   }
 
   logout(): void {
-    this.auth.logout({ returnTo: document.location.origin });
+    this.auth.logout({ });
   }
 }

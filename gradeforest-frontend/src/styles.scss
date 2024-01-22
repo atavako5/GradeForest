@@ -2,8 +2,35 @@
 @use '@angular/material' as mat;
 @include mat.core();
 
-$primary: mat-palette($mat-deep-purple, 600, 500, 900);
-$accent: mat-palette($mat-amber, A400, A300, A600);
+$dark-theme: mat.define-dark-theme((
+ color: (
+   primary: mat.define-palette(mat.$pink-palette),
+   accent: mat.define-palette(mat.$blue-grey-palette),
+ ),
+  // Only include `typography` and `density` in the default dark theme.
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+// Define a light theme
+$light-theme: mat.define-light-theme((
+ color: (
+   primary: mat.define-palette(mat.$indigo-palette),
+   accent: mat.define-palette(mat.$pink-palette),
+ ),
+));
+
+@include mat.core-theme($dark-theme);
+@include mat.button-theme($dark-theme);
+
+@media (prefers-color-scheme: light) {
+  // Use the `-color` mixins to only apply color styles without reapplying the same
+  // typography and density styles.
+  @include mat.core-color($light-theme);
+  @include mat.button-color($light-theme);
+ }
+
+ 
 
 html,
 body {
@@ -14,20 +41,21 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+
 .color-primary {
-  color: mat-color($primary);
+ color: mat.get-theme-color($light-theme, primary);
 }
 
 .color-accent {
-  color: mat-color($accent);
+  color: mat.get-theme-color($light-theme, accent);
 }
 
 .background-color-primary {
-  background-color: mat-color($primary);
+background-color: mat.get-theme-color($light-theme, primary);
 }
 
 .background-color-accent {
-  background-color: mat-color($accent);
+  background-color: mat.get-theme-color($light-theme, accent);
 }
 
 mat-divider {

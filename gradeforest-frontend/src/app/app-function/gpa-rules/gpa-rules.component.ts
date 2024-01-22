@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { GPARule } from 'interfaces/gpa-rule';
 import { List } from 'interfaces/list';
-import * as _ from 'lodash';
 import { ListService } from 'src/app/api/services/list.service';
 import { GpaRulesCopyDialogComponent } from 'src/app/dialogs/gpa-rules-copy-dialog/gpa-rules-copy-dialog.component';
 import { GpaRulesDialogComponent } from 'src/app/dialogs/gpa-rules-dialog/gpa-rules-dialog.component';
@@ -79,7 +78,7 @@ export class GpaRulesComponent implements OnInit {
   openGPARulesCopyDialog() {
 
     const dialogRef = this.dialog.open(GpaRulesCopyDialogComponent, {
-      data: { lists: _.filter(this.lists, list => { return list._id != this.selectedList._id }) as List[] },
+      data: { lists: this.lists.filter(list => { return list._id != this.selectedList._id }) as List[] },
     });
 
     dialogRef.afterClosed().subscribe((listId: string) => {

@@ -92,7 +92,7 @@ export class SearchSelectListComponent implements OnInit {
           .subscribe((list) => {
 
             this.getLists(() => {
-              this.selectedList.setValue(_.find(this.data, list));
+              this.selectedList.setValue(this.data?.find((a) => a._id == list._id));
             });
           });
       });

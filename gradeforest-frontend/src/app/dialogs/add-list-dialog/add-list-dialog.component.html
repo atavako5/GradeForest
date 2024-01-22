@@ -1,10 +1,10 @@
 <div mat-dialog-content>
-  <mat-form-field appearance="fill">
+  <mat-form-field>
     <mat-label>New list name</mat-label>
     <input matInput [(ngModel)]="data.listName">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onCancelClick()">Cancel</button>
-  <button mat-button (click)="onOKClick()" cdkFocusInitial>Ok</button>
+  <button mat-button color="primary" (click)="onCancelClick()">Cancel</button>
+  <button mat-button color="accent" (click)="onOKClick()" cdkFocusInitial>Ok</button>
 </div>

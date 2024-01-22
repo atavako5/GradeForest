@@ -4,7 +4,6 @@ import { IncludeTypes } from 'interfaces/include-types';
 import { Item } from 'interfaces/item';
 import { ItemTypes } from 'interfaces/item-types';
 import { List } from 'interfaces/list';
-import * as _ from 'lodash';
 import { CurrentListService } from '../../helpers/services/current-list.service';
 import { ForestService } from '../../helpers/services/forest.service';
 import { ListService } from '../../api/services/list.service';
@@ -127,7 +126,7 @@ export class ItemViewerComponent implements OnInit {
         this.data.parent = 0;
       }
       if (this.currentList) {
-        this.currentList.items = _.map(this.currentList.items, (a: Item) => {
+        this.currentList.items = this.currentList.items.map((a: Item) => {
           return a.id == this.data?.id ? this.data : a;
         });
         this.updateList();
