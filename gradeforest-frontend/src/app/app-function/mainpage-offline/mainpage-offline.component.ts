@@ -4,6 +4,7 @@ import { MyAuthService } from '../../authentication/login/services/my-auth.servi
 import { SaveModeService } from 'src/app/helpers/services/save-mode.service';
 import { SaveMode } from 'interfaces/save-mode';
 import { OfflineDataService } from 'src/app/helpers/services/offline-data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-page-offline',
@@ -18,7 +19,8 @@ export class MainPageOfflineComponent implements OnInit {
     public auth: AuthService,
     public myAuth: MyAuthService,
     public saveMode: SaveModeService,
-    public OfflineDataService: OfflineDataService
+    public OfflineDataService: OfflineDataService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -30,6 +32,7 @@ export class MainPageOfflineComponent implements OnInit {
     let files = (event.target as HTMLInputElement).files
     if (files) {
       this.OfflineDataService.uploadData(files[0])
+      window.location.reload();
     }
 
   }

@@ -4,8 +4,8 @@
 
 $dark-theme: mat.define-dark-theme((
  color: (
-   primary: mat.define-palette(mat.$pink-palette),
-   accent: mat.define-palette(mat.$blue-grey-palette),
+   primary: mat.define-palette(mat.$deep-purple-palette),
+   accent: mat.define-palette(mat.$amber-palette),
  ),
   // Only include `typography` and `density` in the default dark theme.
   typography: mat.define-typography-config(),
@@ -15,8 +15,8 @@ $dark-theme: mat.define-dark-theme((
 // Define a light theme
 $light-theme: mat.define-light-theme((
  color: (
-   primary: mat.define-palette(mat.$indigo-palette),
-   accent: mat.define-palette(mat.$pink-palette),
+  primary: mat.define-palette(mat.$pink-palette),
+  accent: mat.define-palette(mat.$blue-grey-palette),
  ),
 ));
 
@@ -35,27 +35,29 @@ $light-theme: mat.define-light-theme((
 html,
 body {
   height: 100%;
+  background-color:  mat.get-theme-color($light-theme, primary);;
 }
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+
 }
 
 
 .color-primary {
- color: mat.get-theme-color($light-theme, primary);
+ color: mat.get-theme-color($dark-theme, primary);
 }
 
 .color-accent {
-  color: mat.get-theme-color($light-theme, accent);
+  color: mat.get-theme-color($dark-theme, accent);
 }
 
 .background-color-primary {
-background-color: mat.get-theme-color($light-theme, primary);
+background-color: mat.get-theme-color($dark-theme, primary);
 }
 
 .background-color-accent {
-  background-color: mat.get-theme-color($light-theme, accent);
+  background-color: mat.get-theme-color($dark-theme, accent);
 }
 
 mat-divider {

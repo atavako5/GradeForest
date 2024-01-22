@@ -25,11 +25,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AddListDialogComponent } from './dialogs/add-list-dialog/add-list-dialog.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularFixHeaderGridModule } from 'modern-angular-fix-header-grid';
 import { AuthGuard } from '@auth0/auth0-angular';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { SearchSelectListComponent } from './app-function/search-select-list/search-select-list.component';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
@@ -59,6 +60,7 @@ import { GpaRulesCopyDialogComponent } from './dialogs/gpa-rules-copy-dialog/gpa
     GpaRulesDialogComponent,
     GpaRulesComponent,
     GpaRulesCopyDialogComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -75,9 +77,10 @@ import { GpaRulesCopyDialogComponent } from './dialogs/gpa-rules-copy-dialog/gpa
         component: MainPageOfflineComponent,
       }, //
       { path: '**', component: LoginComponent },
-    ]),
+  ],{useHash: true}),
     AppRoutingModule,
     AngularTreeGridModule,
+    AngularFixHeaderGridModule,
     HttpClientModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
